@@ -78,6 +78,7 @@ async function executeRepeatedly() {
   while (true) {
     modifyTable();
     await delay(500);
+    console.log('teste')
   }
 }
 
