@@ -1,3 +1,4 @@
+console.log(1)
 // Função para fazer a requisição à API
 function fetchVendor(macAddress, macCell) {
     const url = "https://api.macvendors.com/" + encodeURIComponent(macAddress);
