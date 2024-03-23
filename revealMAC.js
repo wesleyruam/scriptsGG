@@ -1,23 +1,28 @@
-console.log(1)
+console.log(2)
+// Função para fazer a requisição à API
 // Função para fazer a requisição à API
 function fetchVendor(macAddress, macCell) {
     const url = "https://api.macvendors.com/" + encodeURIComponent(macAddress);
-    GM_xmlhttpRequest({
-        method: "GET",
-        url: url,
-        onload: function(response) {
-            if (response.status === 200) {
-                const vendor = response.responseText;
-                const currentText = macAddress + " (" + vendor + ")";
-                // Verifica se o texto atual é diferente do que já está no campo do MAC
-                if (macCell.textContent.trim() !== currentText) {
-                    // Insere a resposta da API no mesmo campo que o MAC
-                    macCell.textContent = currentText;
-                }
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        }
-    });
+            return response.text();
+        })
+        .then(vendor => {
+            const currentText = macAddress + " (" + vendor + ")";
+            // Verifica se o texto atual é diferente do que já está no campo do MAC
+            if (macCell.textContent.trim() !== currentText) {
+                // Insere a resposta da API no mesmo campo que o MAC
+                macCell.textContent = currentText;
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
 }
+
 
 // Função para verificar se a tabela está presente e modificar o MAC
 function modifyTable() {
