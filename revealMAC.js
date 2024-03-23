@@ -1,27 +1,27 @@
-console.log(2)
-// Função para fazer a requisição à API
-// Função para fazer a requisição à API
+console.log(3)
+
 function fetchVendor(macAddress, macCell) {
     const url = "https://api.macvendors.com/" + encodeURIComponent(macAddress);
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(vendor => {
-            const currentText = macAddress + " (" + vendor + ")";
+    fetch(url, {
+        mode: 'no-cors' // Define o modo 'no-cors'
+    })
+    .then(response => {
+        // A resposta não estará disponível para leitura devido ao modo 'no-cors'
+        // Verificamos apenas se a solicitação foi feita com sucesso
+        if (response.ok) {
+            const currentText = macAddress + " (Unknown)"; // Como não podemos acessar a resposta, definimos como "Unknown"
             // Verifica se o texto atual é diferente do que já está no campo do MAC
             if (macCell.textContent.trim() !== currentText) {
                 // Insere a resposta da API no mesmo campo que o MAC
                 macCell.textContent = currentText;
             }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
 }
+
 
 
 // Função para verificar se a tabela está presente e modificar o MAC
