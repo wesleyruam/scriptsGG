@@ -9,6 +9,8 @@
 // @grant        GM_setClipboard
 // ==/UserScript==
 
+//12345667890
+
 //ntwk/lan_server
 // caso necessário será no parâmetro dnsmode false/true
 
