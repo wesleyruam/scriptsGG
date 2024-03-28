@@ -1,10 +1,11 @@
 // ==UserScript==
-// @name         Copiar mensagens
+// @name         Copiar mensagens SZ
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  Copiar mensagens do chat para a área de transferência
-// @author       You
+// @description  Copiar mensagens do chat do SZ para a área de transferência
+// @author       Wesley GG
 // @match        https://ggnet.sz.chat/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=sz.chat
 // @grant        GM_setClipboard
 // ==/UserScript==
 
