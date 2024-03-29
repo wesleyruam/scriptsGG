@@ -6,6 +6,9 @@
 // @author       Wesley GG
 // @match        https://ggnet.sz.chat/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sz.chat
+// @license      MIT
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Copiar%20mensagens%20SZ.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/Copiar%20mensagens%20SZ.user.js
 // @grant        GM_setClipboard
 // ==/UserScript==
 
