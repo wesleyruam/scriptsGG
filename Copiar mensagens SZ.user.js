@@ -9,6 +9,9 @@
 // @grant        GM_setClipboard
 // ==/UserScript==
 
+
+// Teste
+
 (function() {
     'use strict';
 
