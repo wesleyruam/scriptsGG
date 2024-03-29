@@ -39,16 +39,14 @@
             // Adicionando o botão à div
             divMenuTags.insertAdjacentHTML('beforeend', linkHTML);
 
-            // Criando o HTML do toast
-            var toastHTML = '<div id="toast-container" class="toast-top-right" style="display: none;"><div class="toast toast-info" aria-live="polite" style="opacity: 1;"><div class="toast-progress" style="width: 0%;"></div><button type="button" class="toast-close-button" role="button">×</button><div class="toast-message"></div></div></div>';
-
-            // Adicionando o toast ao corpo do documento
-            document.body.insertAdjacentHTML('beforeend', toastHTML);
 
             // Adicionando o evento de clique para copiar as mensagens e mostrar o toast
             var linkElement = divMenuTags.querySelector('.item');
-            var toastContainer = document.getElementById('toast-container');
+
             linkElement.addEventListener('click', function() {
+                var toastHTML = '<div id="toast-container" class="toast-top-right" style="display: none;"><div class="toast toast-info" aria-live="polite" style="opacity: 1;"><div class="toast-progress" style="width: 0%;"></div><button type="button" class="toast-close-button" role="button">×</button><div class="toast-message"></div></div></div>';
+                document.body.insertAdjacentHTML('beforeend', toastHTML);
+                var toastContainer = document.getElementById('toast-container');
                 copiarParaAreaDeTransferencia();
                 mostrarToast(toastContainer);
             });
@@ -67,9 +65,10 @@
         toastMessage.textContent = "Mensagens copiadas com sucesso";
         toastContainer.style.display = "block";
 
-        // Ocultar o toast após 3 segundos
+        // Ocultar o toast após 3 segundos e remover a div do toast
         setTimeout(function() {
             toastContainer.style.display = "none";
+            toastContainer.remove();
         }, 3000);
     }
 
@@ -77,4 +76,3 @@
     adicionarElementos();
 
 })();
-
