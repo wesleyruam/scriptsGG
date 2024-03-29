@@ -6,6 +6,9 @@
 // @author       Wesley GG
 // @match        https://*/html/index.html
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gegnet.com.br
+// @license      MIT
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Cria%20Relatorio%20Roteadores%20Huawei%20Comuns%20AX2%20WS-0.4.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/Cria%20Relatorio%20Roteadores%20Huawei%20Comuns%20AX2%20WS-0.4.user.js
 // @grant        GM_setClipboard
 // ==/UserScript==
 
