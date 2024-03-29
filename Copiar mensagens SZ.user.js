@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Copiar mensagens SZ teste
+// @name         Copiar mensagens SZ
 // @namespace    http://tampermonkey.net/
 // @version      0.2
 // @description  Copiar mensagens do chat do SZ para a área de transferência
