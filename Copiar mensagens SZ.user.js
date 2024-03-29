@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Copiar mensagens SZ
+// @name         Copiar mensagens SZ teste
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Copiar mensagens do chat do SZ para a área de transferência
 // @author       Wesley GG
 // @match        https://ggnet.sz.chat/*
@@ -28,19 +28,30 @@
         return mensagens;
     }
 
-    // Função para criar e adicionar o botão à div
-    function adicionarBotao() {
-        var divTagsSessions = document.querySelector('.item.tags-sessions');
+    // Função para criar e adicionar o botão e o toast ao HTML
+    function adicionarElementos() {
+        var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
 
-        if (divTagsSessions) {
-            var button = document.createElement('button');
-            button.textContent = 'Copiar Mensagens';
-            button.style.border = '1px solid black';
-            button.addEventListener('click', function() {
+        if (divMenuTags) {
+            // Criando o HTML do botão
+            var linkHTML = '<a data-v-5cbb963e="" class="item text-ellipsis"><i data-v-5cbb963e="" class="icon tag"></i> Mensagens: Copiar Mensagens </a>';
+
+            // Adicionando o botão à div
+            divMenuTags.insertAdjacentHTML('beforeend', linkHTML);
+
+            // Criando o HTML do toast
+            var toastHTML = '<div id="toast-container" class="toast-top-right" style="display: none;"><div class="toast toast-info" aria-live="polite" style="opacity: 1;"><div class="toast-progress" style="width: 0%;"></div><button type="button" class="toast-close-button" role="button">×</button><div class="toast-message"></div></div></div>';
+
+            // Adicionando o toast ao corpo do documento
+            document.body.insertAdjacentHTML('beforeend', toastHTML);
+
+            // Adicionando o evento de clique para copiar as mensagens e mostrar o toast
+            var linkElement = divMenuTags.querySelector('.item');
+            var toastContainer = document.getElementById('toast-container');
+            linkElement.addEventListener('click', function() {
                 copiarParaAreaDeTransferencia();
+                mostrarToast(toastContainer);
             });
-
-            divTagsSessions.appendChild(button);
         }
     }
 
@@ -48,11 +59,22 @@
     function copiarParaAreaDeTransferencia() {
         var mensagens = copiarMensagens();
         GM_setClipboard(mensagens);
-        console.log("Mensagens copiadas para a área de transferência:");
-        console.log(mensagens);
     }
 
-    // Adicionar botão à div
-    adicionarBotao();
+    // Mostrar toast
+    function mostrarToast(toastContainer) {
+        var toastMessage = toastContainer.querySelector('.toast-message');
+        toastMessage.textContent = "Mensagens copiadas com sucesso";
+        toastContainer.style.display = "block";
+
+        // Ocultar o toast após 3 segundos
+        setTimeout(function() {
+            toastContainer.style.display = "none";
+        }, 3000);
+    }
+
+    // Adicionar botão e toast ao HTML
+    adicionarElementos();
 
 })();
+
