@@ -22,7 +22,7 @@
             var horario = li.querySelector('.timestamp').textContent.trim();
             var texto = li.querySelector(".bubble > div:nth-child(2) > div > div:nth-child(1) > span").textContent.trim();
 
-            mensagens += nome + " - " + horario + " - " + texto + "\n";
+            mensagens += nome + " - " + horario + " - " + texto + "\n\n";
         });
 
         return mensagens;
