@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cria Relatorio Roteadores Huawei Comuns AX2 WS
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  try to take over the world!
 // @author       Wesley GG
 // @match        https://*/html/index.html
@@ -52,6 +52,26 @@ var headers = {
     "sec-ch-ua-mobile": "?0",
     "sec-ch-ua-platform": "\"Windows\""
 };
+
+function getUptime(){
+    let path = 'system/deviceinfo';
+    let url = url_api + path;
+
+    return fetch(url, { headers: headers }).then(response => response.json().then(data => {
+        if (data.UpTime >= 86400) {
+            const dias = Math.floor(data.UpTime / 86400);
+            return dias === 1 ? "1 dia" : dias + " dias";
+        } else if (data.UpTime >= 3600) {
+            const horas = Math.floor(data.UpTime / 3600);
+            return horas === 1 ? "1 hora" : horas + " horas";
+        } else if (data.UpTime >= 60) {
+            const minutos = Math.floor(data.UpTime / 60);
+            return minutos === 1 ? "1 minuto" : minutos + " minutos";
+        } else {
+            return data.UpTime === 1 ? "1 segundo" : data.UpTime + " segundos";
+        }
+    }));
+}
 
 // Função para obter informações da WAN
 function getWAN() {
@@ -118,7 +138,7 @@ function getPriorizar5G() {
 
 function constructScript(){
     // Monta a string com as informações
-    Promise.all([getDeviceInfo(), ConectadosNoMomento(), getWAN(), getUPnPStatus(), getRedesInfo24GHz(), getRedesInfo5GHz(), getIPV6status(), getPriorizar5G()]).then(values => {
+    Promise.all([getDeviceInfo(), ConectadosNoMomento(), getWAN(), getUPnPStatus(), getRedesInfo24GHz(), getRedesInfo5GHz(), getIPV6status(), getPriorizar5G(), getUptime()]).then(values => {
         var deviceInfo = values[0];
         var connectedDevices = values[1];
         var upnpStatus = values[3];
@@ -126,6 +146,7 @@ function constructScript(){
         var redes5GHz = values[5];
         var ipv6Status = values[6];
         var priorizar5G = values[7];
+        var getUptime = values[8];
         var dnsWAN;
         var dns_padrao_gg = ["187.85.152.10", "187.85.152.11"];
 
@@ -148,10 +169,9 @@ Priorizar 5G ${priorizar5G ? 'Habilitado' : 'Desabilitado'}
 IPv6 ${ipv6Status ? 'Habilitado em ' + ipv6Status : 'Desabilitado'}
 UPnP ${upnpStatus ? 'Habilitado' : 'Desabilitado'}
 Rede 2.4 com canal ${redes24GHz.canal} e largura em ${redes24GHz.largura_banda}
-Rede 5G com canal ${redes5GHz.canal} e largura em ${redes5GHz.largura_banda}`;
+Rede 5G com canal ${redes5GHz.canal} e largura em ${redes5GHz.largura_banda}
+Uptime: ${getUptime}`;
         console.log("[!] Copiado para área de Transferência");
-        console.log(dnsWAN)
-        console.log(values[2])
 
         GM_setClipboard(script);
         console.log(script);
@@ -176,5 +196,3 @@ async function executeRepeatedly() {
 }
 
 executeRepeatedly();
-
-
