@@ -101,7 +101,6 @@
         head.appendChild(style);
     }
 
-    // CSS que você deseja adicionar
     var customCSS = `
     .custom-toast-title { font-weight: 700; }
     .custom-toast-message { -ms-word-wrap: break-word; word-wrap: break-word; }
