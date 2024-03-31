@@ -23,12 +23,17 @@
         var liElements = document.querySelectorAll('.speech-wrapper li');
         var mensagens = "";
 
+        let c = 1;
         liElements.forEach(function(li) {
+            try {
             var nome = li.querySelector('.name').textContent.trim();
             var horario = li.querySelector('.timestamp').textContent.trim();
             var texto = li.querySelector(".bubble > div:nth-child(2) > div > div:nth-child(1) > span").textContent.trim();
 
             mensagens += nome + " - " + horario + " - " + texto + "\n\n";
+            }catch{
+                //pass
+            }
         });
 
         return mensagens;
