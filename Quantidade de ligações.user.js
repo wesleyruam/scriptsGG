@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quantidade de ligações
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       Wesley GG
 // @match        http://qm.coger.net.br:8080/queuemetrics/qm_agentpage2_load.do
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-
+// Teste quantidade de ligações
 
 // Função para verificar periodicamente se os elementos estão presentes na página
 function waitForElements() {
