@@ -6,6 +6,8 @@
 // @author       Wesley GG
 // @match        http://qm.coger.net.br:8080/queuemetrics/qm_agentpage2_load.do
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gegnet.com.br
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Quantidade%20de%20liga%C3%A7%C3%B5es.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/Cria%20Relatorio%20Roteadores%20Huawei%20Comuns%20AX2%20WS.meta.js
 // @grant        none
 // ==/UserScript==
 
