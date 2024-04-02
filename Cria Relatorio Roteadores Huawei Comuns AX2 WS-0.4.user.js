@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cria Relatorio Roteadores Huawei Comuns AX2 WS
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  try to take over the world!
 // @author       Wesley GG
 // @match        https://*/html/index.html
@@ -107,7 +107,7 @@ function getRedesInfo5GHz() {
 // Função para obter informações do dispositivo
 function getDeviceInfo() {
     var url = url_api + "system/deviceinfo";
-    return fetch(url, { headers: headers }).then(response => response.json()).then(data => data.custinfo.CustENFriendlyName);
+    return fetch(url, { headers: headers }).then(response => response.json()).then(data => [data.FriendlyName, data.SoftwareVersion]);
 }
 
 // Função para obter o número de dispositivos conectados no momento
@@ -161,7 +161,7 @@ function constructScript(){
 
         var script = `
 Configurações do roteador:
-Cliente possui um ${deviceInfo}
+Cliente possui um ${deviceInfo[0]} ${deviceInfo[1]}
 Equipamentos conectados no momento: ${connectedDevices}
 DNS WAN ${dnsWAN}
 DNS LAN ${dnsWAN}
