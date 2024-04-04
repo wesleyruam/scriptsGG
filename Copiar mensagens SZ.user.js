@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Copiar mensagens SZ
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Copiar mensagens do chat do SZ para a área de transferência
 // @author       Wesley GG
 // @match        https://ggnet.sz.chat/*
@@ -39,41 +39,84 @@
         return mensagens;
     }
 
-    // Função para criar e adicionar o botão e o toast ao HTML
-    function adicionarElementos() {
+    function addElementPhone(){
         var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
 
         if (divMenuTags) {
-            // Criando o HTML do botão
-            var linkHTML = '<a data-v-5cbb963e="" class="item text-ellipsis"><i data-v-5cbb963e="" class="icon tag"></i> Mensagens: Copiar Mensagens </a>';
+            var numeroEncontrado = false;
+
+            var timer = setInterval(function() {
+                let smallElement = document.querySelector('small.mt-2');
+                if (smallElement !== null && !numeroEncontrado) {
+                    clearInterval(timer);
+                    numeroEncontrado = true;
+
+                    var phoneNumber = smallElement.textContent.trim();
+                    console.log(phoneNumber);
+
+                    phoneElement(phoneNumber);
+                } else if (!numeroEncontrado) {
+                    console.log('Aguardando elemento...');
+                }
+            }, 1000);
+        }
+    }
+
+    function phoneElement(phoneNumber) {
+        var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
+
+        if (divMenuTags) {
+            // Criando o HTML do botão com o número de telefone
+            var linkTel = `<a data-v-5cbb963e="" class="item text-ellipsis buttonPhoneNumber"><i data-v-5cbb963e="" class="icon tag"></i> Telefone: ${phoneNumber} </a>`;
 
             // Adicionando o botão à div
+            divMenuTags.insertAdjacentHTML('beforeend', linkTel);
+
+            var element = divMenuTags.querySelector('.buttonPhoneNumber');
+
+            element.addEventListener('click', function() {
+                var toastHTML = '<div id="custom-toast-container" class="custom-toast-top-right" style="display: none;"><div class="custom-toast custom-toast-info" aria-live="polite" style="opacity: 1;"><div class="custom-toast-progress" style="width: 0%;"></div><button type="button" class="custom-toast-close-button" role="button">×</button><div class="custom-toast-message"></div></div></div>';
+                document.body.insertAdjacentHTML('beforeend', toastHTML);
+                var toastContainer = document.getElementById('custom-toast-container');
+                var textToast = "Telefone copiado com sucesso."
+                copiarParaAreaDeTransferencia(phoneNumber);
+                mostrarToast(toastContainer, textToast);
+            });
+        }
+    }
+
+    function addMessageElement() {
+        var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
+
+        if (divMenuTags) {
+            var linkHTML = '<a data-v-5cbb963e="" class="item text-ellipsis"><i data-v-5cbb963e="" class="icon tag"></i> Mensagens: Copiar Mensagens </a>';
+
             divMenuTags.insertAdjacentHTML('beforeend', linkHTML);
 
 
-            // Adicionando o evento de clique para copiar as mensagens e mostrar o toast
             var linkElement = divMenuTags.querySelector('.item');
 
             linkElement.addEventListener('click', function() {
                 var toastHTML = '<div id="custom-toast-container" class="custom-toast-top-right" style="display: none;"><div class="custom-toast custom-toast-info" aria-live="polite" style="opacity: 1;"><div class="custom-toast-progress" style="width: 0%;"></div><button type="button" class="custom-toast-close-button" role="button">×</button><div class="custom-toast-message"></div></div></div>';
                 document.body.insertAdjacentHTML('beforeend', toastHTML);
                 var toastContainer = document.getElementById('custom-toast-container');
-                copiarParaAreaDeTransferencia();
-                mostrarToast(toastContainer);
+                var mensagens = copiarMensagens();
+                var textToast = "Mensagens copiadas com sucesso."
+                copiarParaAreaDeTransferencia(mensagens);
+                mostrarToast(toastContainer, textToast);
             });
         }
     }
 
     // Copiar mensagens para a área de transferência
-    function copiarParaAreaDeTransferencia() {
-        var mensagens = copiarMensagens();
-        GM_setClipboard(mensagens);
+    function copiarParaAreaDeTransferencia(text) {
+        GM_setClipboard(text);
     }
 
     // Mostrar toast
-    function mostrarToast(toastContainer) {
+    function mostrarToast(toastContainer, text) {
         var toastMessage = toastContainer.querySelector('.custom-toast-message');
-        toastMessage.textContent = "Mensagens copiadas com sucesso";
+        toastMessage.textContent = text;
         toastContainer.style.display = "block";
 
         // Ocultar o toast após 3 segundos e remover a div do toast
@@ -84,7 +127,8 @@
     }
 
     // Adicionar botão e toast ao HTML
-    adicionarElementos();
+    addMessageElement();
+    addElementPhone();
 
     // Função para adicionar o CSS ao head do documento
     function addCSS(cssText) {
