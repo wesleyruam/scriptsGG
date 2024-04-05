@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Copiar mensagens SZ
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.8
 // @description  Copiar mensagens do chat do SZ para a área de transferência
 // @author       Wesley GG
 // @match        https://ggnet.sz.chat/*
@@ -59,20 +59,25 @@
         return protocolo;
     }
 
-    function elementProtocol(){
+    function elementProtocol() {
         var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
 
         if (divMenuTags) {
             let protocol = findProtocol();
-            // Criando o HTML do botão com o número de telefone
-            var linkTel = `<a data-v-5cbb963e="" class="item text-ellipsis buttonProtocol"><i data-v-5cbb963e="" class="icon tag"></i> Prot. Atendimento: ${protocol} </a>`;
+            // Verificar se o elemento já existe
+            var existingElement = divMenuTags.querySelector('.buttonProtocol');
+            if (existingElement) {
+                // Se existir, apenas atualize seu conteúdo
+                existingElement.querySelector('.ProtocolText').textContent = `Prot. Atendimento: ${protocol}`;
+            } else {
+                // Se não existir, crie um novo elemento
+                var linkTel = `<a data-v-5cbb963e="" class="item text-ellipsis buttonProtocol"><i data-v-5cbb963e="" class="icon tag"></i><span class="ProtocolText">Prot. Atendimento: ${protocol}</span></a>`;
+                divMenuTags.insertAdjacentHTML('beforeend', linkTel);
+                existingElement = divMenuTags.querySelector('.buttonProtocol');
+            }
 
-            // Adicionando o botão à div
-            divMenuTags.insertAdjacentHTML('beforeend', linkTel);
-
-            var element = divMenuTags.querySelector('.buttonProtocol');
-
-            element.addEventListener('click', function() {
+            // Adicione o evento de clique ao elemento
+            existingElement.addEventListener('click', function() {
                 var toastHTML = '<div id="custom-toast-container" class="custom-toast-top-right" style="display: none;"><div class="custom-toast custom-toast-info" aria-live="polite" style="opacity: 1;"><div class="custom-toast-progress" style="width: 0%;"></div><button type="button" class="custom-toast-close-button" role="button">×</button><div class="custom-toast-message"></div></div></div>';
                 document.body.insertAdjacentHTML('beforeend', toastHTML);
                 var toastContainer = document.getElementById('custom-toast-container');
@@ -81,10 +86,9 @@
                 mostrarToast(toastContainer, textToast);
             });
         }
-
     }
 
-    function addElementPhone(){
+    function addElementPhone() {
         var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
 
         if (divMenuTags) {
@@ -112,15 +116,20 @@
         var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
 
         if (divMenuTags) {
-            // Criando o HTML do botão com o número de telefone
-            var linkTel = `<a data-v-5cbb963e="" class="item text-ellipsis buttonPhoneNumber"><i data-v-5cbb963e="" class="icon tag"></i> Telefone: ${phoneNumber} </a>`;
+            // Verificar se o elemento já existe
+            var existingElement = divMenuTags.querySelector('.buttonPhoneNumber');
+            if (existingElement) {
+                // Se existir, apenas atualize seu conteúdo
+                existingElement.querySelector('.textTelPhone').textContent = `Telefone: ${phoneNumber}`;
+            } else {
+                // Se não existir, crie um novo elemento
+                var linkTel = `<a data-v-5cbb963e="" class="item text-ellipsis buttonPhoneNumber"><i data-v-5cbb963e="" class="icon tag"></i><span class="textTelPhone">Telefone: ${phoneNumber}</span></a>`;
+                divMenuTags.insertAdjacentHTML('beforeend', linkTel);
+                existingElement = divMenuTags.querySelector('.buttonPhoneNumber');
+            }
 
-            // Adicionando o botão à div
-            divMenuTags.insertAdjacentHTML('beforeend', linkTel);
-
-            var element = divMenuTags.querySelector('.buttonPhoneNumber');
-
-            element.addEventListener('click', function() {
+            // Adicione o evento de clique ao elemento
+            existingElement.addEventListener('click', function() {
                 var toastHTML = '<div id="custom-toast-container" class="custom-toast-top-right" style="display: none;"><div class="custom-toast custom-toast-info" aria-live="polite" style="opacity: 1;"><div class="custom-toast-progress" style="width: 0%;"></div><button type="button" class="custom-toast-close-button" role="button">×</button><div class="custom-toast-message"></div></div></div>';
                 document.body.insertAdjacentHTML('beforeend', toastHTML);
                 var toastContainer = document.getElementById('custom-toast-container');
@@ -131,28 +140,34 @@
         }
     }
 
+
     function addMessageElement() {
         var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
 
         if (divMenuTags) {
-            var linkHTML = '<a data-v-5cbb963e="" class="item text-ellipsis"><i data-v-5cbb963e="" class="icon tag"></i> Mensagens: Copiar Mensagens </a>';
+            // Verificar se o elemento já existe
+            var existingElement = divMenuTags.querySelector('.buttonMessages');
+            if (!existingElement) {
+                // Se não existir, crie um novo elemento
+                var linkHTML = '<a data-v-5cbb963e="" class="item text-ellipsis buttonMessages"><i data-v-5cbb963e="" class="icon tag"></i> Mensagens: Copiar Mensagens </a>';
+                divMenuTags.insertAdjacentHTML('beforeend', linkHTML);
+                existingElement = divMenuTags.querySelector('.buttonMessages');
+            }
 
-            divMenuTags.insertAdjacentHTML('beforeend', linkHTML);
-
-
-            var linkElement = divMenuTags.querySelector('.item');
-
-            linkElement.addEventListener('click', function() {
+            // Adicionar o evento de clique ao elemento
+            existingElement.addEventListener('click', function() {
                 var toastHTML = '<div id="custom-toast-container" class="custom-toast-top-right" style="display: none;"><div class="custom-toast custom-toast-info" aria-live="polite" style="opacity: 1;"><div class="custom-toast-progress" style="width: 0%;"></div><button type="button" class="custom-toast-close-button" role="button">×</button><div class="custom-toast-message"></div></div></div>';
                 document.body.insertAdjacentHTML('beforeend', toastHTML);
                 var toastContainer = document.getElementById('custom-toast-container');
-                var mensagens = copiarMensagens();
                 var textToast = "Mensagens copiadas com sucesso."
+                var mensagens = copiarMensagens();
                 copiarParaAreaDeTransferencia(mensagens);
                 mostrarToast(toastContainer, textToast);
             });
         }
     }
+
+
 
     // Copiar mensagens para a área de transferência
     function copiarParaAreaDeTransferencia(text) {
@@ -171,10 +186,6 @@
             toastContainer.remove();
         }, 3000);
     }
-
-    // Adicionar botão e toast ao HTML
-    addMessageElement();
-    addElementPhone();
 
     // Função para adicionar o CSS ao head do documento
     function addCSS(cssText) {
@@ -269,8 +280,15 @@
         }
 `;
 
-    // Adicionando o CSS personalizado ao head do documento
-    addCSS(customCSS);
+    var originalOpen = window.XMLHttpRequest.prototype.open;
+    window.XMLHttpRequest.prototype.open = function(method, url) {
+        if (url.includes('/user/agent/list/messages/')) {
+            addCSS(customCSS);
+            addMessageElement();
+            addElementPhone();
+        }
+        return originalOpen.apply(this, arguments);
+    };
 
 
 })();
