@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Copiar mensagens SZ
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  Copiar mensagens do chat do SZ para a área de transferência
 // @author       Wesley GG
 // @match        https://ggnet.sz.chat/*
@@ -26,17 +26,66 @@
         let c = 1;
         liElements.forEach(function(li) {
             try {
-            var nome = li.querySelector('.name').textContent.trim();
-            var horario = li.querySelector('.timestamp').textContent.trim();
-            var texto = li.querySelector(".bubble > div:nth-child(2) > div > div:nth-child(1) > span").textContent.trim();
+                var nome = li.querySelector('.name').textContent.trim();
+                var horario = li.querySelector('.timestamp').textContent.trim();
+                var texto = li.querySelector(".bubble > div:nth-child(2) > div > div:nth-child(1) > span").textContent.trim();
 
-            mensagens += nome + " - " + horario + " - " + texto + "\n\n";
+                mensagens += nome + " - " + horario + " - " + texto + "\n\n";
             }catch{
                 //pass
             }
         });
 
         return mensagens;
+    }
+
+    function findProtocol() {
+        console.log(1)
+        var liElements = document.querySelectorAll('.speech-wrapper li');
+        var protocolo = "";
+
+        liElements.forEach(function(li) {
+            try{
+                var texto = li.querySelector(".bubble > div:nth-child(2) > div > div:nth-child(1) > span").textContent.trim();
+                var match = texto.match(/\b\d+\b/);
+
+
+
+                if (match) {
+                    protocolo = match[0];
+                }
+            }catch{
+                //pass
+            }
+        });
+
+        return protocolo;
+    }
+
+
+    function elementProtocol(){
+        var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
+
+        if (divMenuTags) {
+            let protocol = findProtocol();
+            // Criando o HTML do botão com o número de telefone
+            var linkTel = `<a data-v-5cbb963e="" class="item text-ellipsis buttonProtocol"><i data-v-5cbb963e="" class="icon tag"></i> Prot. Atendimento: ${protocol} </a>`;
+
+            // Adicionando o botão à div
+            divMenuTags.insertAdjacentHTML('beforeend', linkTel);
+
+            var element = divMenuTags.querySelector('.buttonProtocol');
+
+            element.addEventListener('click', function() {
+                var toastHTML = '<div id="custom-toast-container" class="custom-toast-top-right" style="display: none;"><div class="custom-toast custom-toast-info" aria-live="polite" style="opacity: 1;"><div class="custom-toast-progress" style="width: 0%;"></div><button type="button" class="custom-toast-close-button" role="button">×</button><div class="custom-toast-message"></div></div></div>';
+                document.body.insertAdjacentHTML('beforeend', toastHTML);
+                var toastContainer = document.getElementById('custom-toast-container');
+                var textToast = "Protocolo copiado com sucesso."
+                copiarParaAreaDeTransferencia(protocol);
+                mostrarToast(toastContainer, textToast);
+            });
+        }
+
     }
 
     function addElementPhone(){
@@ -55,6 +104,7 @@
                     console.log(phoneNumber);
 
                     phoneElement(phoneNumber);
+                    elementProtocol();
                 } else if (!numeroEncontrado) {
                     console.log('Aguardando elemento...');
                 }
