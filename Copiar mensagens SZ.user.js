@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Copiar mensagens SZ
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Copiar mensagens do chat do SZ para a área de transferência
 // @author       Wesley GG
 // @match        https://ggnet.sz.chat/*
@@ -40,28 +40,24 @@
     }
 
     function findProtocol() {
-        console.log(1)
         var liElements = document.querySelectorAll('.speech-wrapper li');
         var protocolo = "";
 
         liElements.forEach(function(li) {
-            try{
+            try {
                 var texto = li.querySelector(".bubble > div:nth-child(2) > div > div:nth-child(1) > span").textContent.trim();
-                var match = texto.match(/\b\d+\b/);
-
-
+                var match = texto.match(/O protocolo do seu atendimento é: (\d+)/);
 
                 if (match) {
-                    protocolo = match[0];
+                    protocolo = match[1];
                 }
-            }catch{
+            } catch(error) {
                 //pass
             }
         });
 
         return protocolo;
     }
-
 
     function elementProtocol(){
         var divMenuTags = document.querySelector('.menu.tags.ft-scroll');
