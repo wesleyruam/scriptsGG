@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Documentação ONU
-// @version      0.1
+// @version      0.2
 // @description  Extrair automaticamente os dados da ONU do gCommit.
 // @author       Wesley GG
 // @match        https://ggnet.gcommit.com.br/showonu/*/*/*/*
