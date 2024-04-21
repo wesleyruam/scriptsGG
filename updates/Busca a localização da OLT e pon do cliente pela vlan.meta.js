@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Busca a localização da OLT e pon do cliente pela vlan
-// @version      0.3
+// @version      0.4
 // @description  Busca a localização da OLT e PON do clinte pela vlan
 // @author       Wesley GG
 // @match        https://integrator6.gegnet.com.br/*
