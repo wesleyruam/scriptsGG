@@ -6,8 +6,8 @@
 // @author       Wesley GG
 // @match        https://integrator6.gegnet.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gegnet.com.br
-// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Copiar%20mensagens%20SZ.user.js
-// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/Copiar%20mensagens%20SZ.meta.js
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Copiar%20Atendimentos%20do%20Cliente.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/Copiar%20Atendimentos%20do%20Cliente.meta.js
 // @grant        GM_setClipboard
 // ==/UserScript==
 
