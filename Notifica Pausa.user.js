@@ -6,6 +6,8 @@
 // @author       You
 // @match        *://qm.coger.net.br:8080/queuemetrics/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=net.br
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Notifica%20Pausa.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/Notifica%20Pausa.meta.js
 // @grant        GM_notification
 // @grant        GM_log
 // ==/UserScript==
