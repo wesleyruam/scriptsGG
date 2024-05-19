@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         ISP New Style!
-// @version      0.1
+// @version      0.2
 // @description  Um novo estilo para o ISP
 // @author       Wesley GG
 // @match        https://integrator6.gegnet.com.br/*
