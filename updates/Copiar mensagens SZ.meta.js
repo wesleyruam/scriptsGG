@@ -8,4 +8,5 @@
 // @license      MIT
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js
 // @grant        GM_setClipboard
+// @grant        GM_log
 // ==/UserScript==
