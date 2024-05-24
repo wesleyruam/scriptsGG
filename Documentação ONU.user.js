@@ -5,7 +5,7 @@
 // @author       Wesley GG
 // @match        https://ggnet.gcommit.com.br/showonu/*/*/*/*
 // @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Documenta%C3%A7%C3%A3o%20ONU.user.js
-// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/Copiar%20mensagens%20SZ.meta.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/Documenta%C3%A7%C3%A3o%20ONU.meta.js
 // @grant        GM_setClipboard
 // ==/UserScript==
 
