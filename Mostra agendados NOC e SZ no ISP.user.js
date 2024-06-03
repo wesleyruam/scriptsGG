@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mostra agendados NOC e SZ no ISP
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Mostra agendados NOC e SZ no ISP
 // @author       You
 // @match        https://integrator6.gegnet.com.br/*
