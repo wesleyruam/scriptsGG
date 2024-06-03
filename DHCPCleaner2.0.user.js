@@ -6,6 +6,8 @@
 // @author       Matheus Eger
 // @match        https://*/html/index.html
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gegnet.com.br
+// @downlaod     https://github.com/wrGGsiq/scriptsGG/raw/main/logarnafilasz.user.js
+// @uptade       https://github.com/wrGGsiq/scriptsGG/raw/main/updates/logarnafilasz.meta.js
 // @license      MIT
 // @grant        GM_setClipboard
 // ==/UserScript==
