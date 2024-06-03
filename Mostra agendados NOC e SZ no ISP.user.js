@@ -6,8 +6,8 @@
 // @author       You
 // @match        https://integrator6.gegnet.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=net.br
-// @download     https://github.com/wrGGsiq/scriptsGG/raw/main/Mostra%20agendados%20NOC%20e%20SZ%20no%20ISP.user.js
-// @upload       https://github.com/wrGGsiq/scriptsGG/raw/main/Mostra%20agendados%20NOC%20e%20SZ%20no%20ISP.user.js
+// @downloadURL     https://github.com/wrGGsiq/scriptsGG/raw/main/Mostra%20agendados%20NOC%20e%20SZ%20no%20ISP.user.js
+// @uploadURL       https://github.com/wrGGsiq/scriptsGG/raw/main/Mostra%20agendados%20NOC%20e%20SZ%20no%20ISP.user.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // ==/UserScript==
