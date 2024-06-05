@@ -6,8 +6,8 @@
 // @author       Matheus Eger
 // @match        https://*/html/index.html
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gegnet.com.br
-// @download     https://github.com/wrGGsiq/scriptsGG/raw/main/logarnafilasz.user.js
-// @update       https://github.com/wrGGsiq/scriptsGG/raw/main/updates/logarnafilasz.meta.js
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/DHCP%20Cleaner%202.0.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/DHCPCleaner2.0.meta.js
 // @license      MIT
 // @grant        GM_setClipboard
 // ==/UserScript==
