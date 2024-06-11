@@ -7,7 +7,7 @@
 // @match        https://integrator6.gegnet.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gegnet.com.br
 // @grant        none
-// @downloadURL  
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Atalho%20pra%20Lentid%C3%A3o,%20Sem%20Acesso%20e%20Massiva%20Rompimento.user.js
 // @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/Atalho%20pra%20Lentid%C3%A3o,%20Sem%20Acesso%20e%20Massiva%20Rompimento.meta.js
 // @license      MIT    
 // ==/UserScript==
