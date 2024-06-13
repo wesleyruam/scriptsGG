@@ -6,6 +6,8 @@
 // @author       Wesley GG
 // @match        http://100.73.103.217/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=www.tp-link.com
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Documenta%20TP-LINK.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/Documenta%20TP-LINK.user.js
 // @grant        GM_log
 // @grant        GM_setClipboard
 // ==/UserScript==
