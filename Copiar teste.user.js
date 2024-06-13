@@ -6,7 +6,7 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gegnet.com.br
 // @author       Matheus Eger
 // @match        https://integrator6.gegnet.com.br/*
-// @downloadURL  
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Copiar%20teste.user.js
 // @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/updates/Copiar%20teste.meta.js
 // @license      MIT
 // @grant        GM_setClipboard
