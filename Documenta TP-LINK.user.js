@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Documenta TP-LINK
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Uma automação para extrair as informações dos roteadores TP-Link  - Testado apenas no Archer C5 | Aperte a telca "Insert"
 // @author       Wesley GG
 // @match        *://*/*
