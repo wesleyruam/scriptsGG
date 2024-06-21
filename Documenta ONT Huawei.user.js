@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Documenta ONT Huawei (versão de testes)
+// @name         Documenta ONT-Huawei (versão de testes)
 // @namespace    http://tampermonkey.net/
 // @version      Demo
 // @description  Extrai informações necessario para documentação da ONT clicando no nome da ONT (Ex: EG8145X6-10), canto esquerdo superior.
