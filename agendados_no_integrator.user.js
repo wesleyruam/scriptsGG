@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Mostra agendados NOC e SZ no ISP
-// @author       Wesley GG
+// @author      alecx/Wesley
 // @match        https://integrator6.gegnet.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=net.br
 // @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/agendados_no_integrator.user.js
