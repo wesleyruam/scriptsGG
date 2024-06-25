@@ -5,6 +5,8 @@
 // @description  mostra os agendamentos do NOC
 // @author       alecx/wesley
 // @match        https://integrator6.gegnet.com.br/*
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Exibi%C3%A7%C3%A3o%20de%20Dados%20de%20Agendamento%20SZ.CHAT.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/Exibi%C3%A7%C3%A3o%20de%20Dados%20de%20Agendamento%20SZ.CHAT.user.js
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
