@@ -6,8 +6,8 @@
 // @author       Wesley GG
 // @match        https://integrator6.gegnet.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=net.br
-// @downloadURL  https://github.com/AlecxandroX/extens-o_SZ/raw/main/extensao_szchat.user.js
-// @updateURL    https://github.com/AlecxandroX/extens-o_SZ/raw/main/extensao_szchat.user.js
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/agendados_no_integrator.user.js
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/agendados_no_integrator.user.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // ==/UserScript==
@@ -191,8 +191,8 @@
         cardContainer.style.padding = '0';
         cardContainer.style.display = 'flex';
         cardContainer.style.flexDirection = 'column';
-        cardContainer.style.bottom = '5px'; // Ajuste a posição vertical
-        cardContainer.style.left = '10px';  // Ajuste a posição horizontal
+        cardContainer.style.bottom = '5px'; // Ajuste vertical
+        cardContainer.style.left = '10px';  // Ajuste horizontal
 
         const contentContainer = cardContainer.querySelector('div:nth-child(2)');
         if (contentContainer) {
@@ -266,31 +266,31 @@
 
     window.addEventListener('load', displayScheduleData);
 
-    // Função para inserir um botão dentro do elemento <aside id="bar1">
+
     function insertButtonIntoSidebar() {
-        // Encontrar o elemento <aside id="bar1">
+       
         const sidebar = document.getElementById('bar1');
 
         if (sidebar) {
-            // Criar um elemento de botão
+          
             const button = document.createElement('button');
             button.textContent = 'Meu Botão';
-            button.className = 'my-custom-button'; // Adicione uma classe para estilização CSS se necessário
+            button.className = 'my-custom-button'; 
 
-            // Adicionar um evento de clique ao botão
+         
             button.addEventListener('click', function() {
-                // Ação que será executada ao clicar no botão
+              
                 alert('Botão clicado!');
             });
 
-            // Inserir o botão antes do primeiro elemento filho do <aside id="bar1">
+            
             sidebar.insertBefore(button, sidebar.firstChild);
         } else {
             console.error('Elemento <aside id="bar1"> não encontrado na página.');
         }
     }
 
-    // Chamar a função para inserir o botão após o carregamento do DOM
+   
     document.addEventListener('DOMContentLoaded', () => {
         insertButtonIntoSidebar();
     });
