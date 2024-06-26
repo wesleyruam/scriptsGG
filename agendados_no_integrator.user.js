@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Mostra agendados NOC e SZ no ISP
-// @author      alecx/Wesley
+// @author       alecx/Wesley
 // @match        https://integrator6.gegnet.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=net.br
 // @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/agendados_no_integrator.user.js
@@ -12,17 +12,27 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-
-(function() {
+(function () {
     'use strict';
 
-    const urls = [
-        { url: 'https://noc-ferramentas.gegnet.com.br/json_noc.php', key: 'dataHora_noc', protocol: 'protocolo_noc', user: 'nome_usuario', title: 'NOC-Suporte' },
-        { url: 'https://noc-ferramentas.gegnet.com.br/json.php', key: 'dataHora', protocol: 'protocolo', user: 'usuario', title: 'SZ.CHAT' }
+    const urls = [{
+            url: 'https://noc-ferramentas.gegnet.com.br/json_noc.php',
+            key: 'dataHora_noc',
+            protocol: 'protocolo_noc',
+            user: 'nome_usuario',
+            title: 'NOC-Suporte'
+        },
+        {
+            url: 'https://noc-ferramentas.gegnet.com.br/json.php',
+            key: 'dataHora',
+            protocol: 'protocolo',
+            user: 'usuario',
+            title: 'SZ.CHAT'
+        }
     ];
 
     const originalWidth = '600px';
-    const originalHeight = '300px';
+    const originalHeight = 'auto';
 
     let cardContainer, titleBar, windowState = 'maximized';
 
@@ -32,14 +42,14 @@
                 method: 'GET',
                 url: url,
                 responseType: 'json',
-                onload: function(response) {
+                onload: function (response) {
                     if (response.status === 200) {
                         resolve(response.response);
                     } else {
                         reject(new Error('Erro ao obter os dados de agendamento'));
                     }
                 },
-                onerror: function(error) {
+                onerror: function (error) {
                     reject(new Error('Erro na requisição HTTP: ' + error.statusText));
                 }
             });
@@ -47,18 +57,8 @@
         })));
     }
 
-    function findNearestSchedule(data, key) {
-        const now = new Date();
-        let nearestSchedule = null, nearestDiff = Infinity;
-        data.forEach(item => {
-            const scheduleDate = new Date(item[key]);
-            const diff = Math.abs(scheduleDate - now);
-            if (diff < nearestDiff) {
-                nearestDiff = diff;
-                nearestSchedule = item;
-            }
-        });
-        return nearestSchedule;
+    function sortScheduleData(data, key) {
+        return data.sort((a, b) => new Date(a[key]) - new Date(b[key]));
     }
 
     function createScheduleList(data, key, protocolKey, userKey) {
@@ -83,216 +83,135 @@
     }
 
     function renderMaximizedCard(data) {
-        cardContainer = document.createElement('div');
-        cardContainer.id = 'schedule-window';
-        cardContainer.classList.add('maximized');
-        cardContainer.style.position = 'fixed';
-        cardContainer.style.bottom = '10px';
-        cardContainer.style.left = '10px';
-        cardContainer.style.zIndex = '9999';
-        cardContainer.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-        cardContainer.style.border = '1px solid #ccc';
-        cardContainer.style.borderRadius = '5px';
-        cardContainer.style.padding = '10px';
-        cardContainer.style.width = originalWidth;
-        cardContainer.style.height = originalHeight;
-        cardContainer.style.overflowY = 'auto';
-        cardContainer.style.display = 'flex';
-        cardContainer.style.flexDirection = 'column';
-        cardContainer.style.transition = 'height 0.3s ease, width 0.3s ease';
+        const intervalId = setInterval(() => {
+            try {
+                const fontAwesomeLink = document.createElement('link');
+                fontAwesomeLink.rel = 'stylesheet';
+                fontAwesomeLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
+                document.head.appendChild(fontAwesomeLink);
 
-        titleBar = document.createElement('div');
-        titleBar.style.backgroundColor = '#1a428a';
-        titleBar.style.color = '#fff';
-        titleBar.style.padding = '5px 10px';
-        titleBar.style.fontWeight = 'bold';
-        titleBar.style.width = '100%';
-        titleBar.textContent = 'Dados';
-        titleBar.style.cursor = 'pointer';
-        titleBar.style.transition = 'background-color 0.3s ease';
-        titleBar.addEventListener('click', toggleWindowState);
+                cardContainer = document.createElement('div');
+                cardContainer.id = 'schedule-window';
+                cardContainer.classList.add('maximized');
+                cardContainer.style.zIndex = '9999';
+                cardContainer.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                cardContainer.style.padding = '10px';
+                cardContainer.style.width = originalWidth;
+                cardContainer.style.height = originalHeight;
+                cardContainer.style.overflowY = 'auto';
+                cardContainer.style.display = 'flex';
+                cardContainer.style.flexDirection = 'column';
+                cardContainer.style.transition = 'height 0.3s ease, width 0.3s ease';
 
-        cardContainer.appendChild(titleBar);
+                titleBar = document.createElement('div');
+                titleBar.style.backgroundColor = '#1a428a';
+                titleBar.style.color = '#fff';
+                titleBar.style.padding = '5px 10px';
+                titleBar.style.fontWeight = 'bold';
+                titleBar.style.width = '100%';
+                titleBar.style.cursor = 'pointer';
+                titleBar.style.transition = 'background-color 0.3s ease';
 
-        const contentContainer = document.createElement('div');
-        contentContainer.style.display = 'flex';
-        contentContainer.style.justifyContent = 'space-between';
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-calendar-alt';
+                icon.style.fontSize = '24px';
 
-        data.forEach((scheduleData, index) => {
-            const { key, protocol, user, title } = urls[index];
-            const column = document.createElement('div');
-            column.style.flex = '1';
-            column.style.padding = '10px';
+                titleBar.appendChild(icon);
 
-            const sectionTitle = document.createElement('h3');
-            sectionTitle.textContent = title;
-            sectionTitle.style.fontSize = '14px';
-            sectionTitle.style.margin = '0 0 10px 0';
-            column.appendChild(sectionTitle);
+                cardContainer.appendChild(titleBar);
 
-            const scheduleList = createScheduleList(scheduleData, key, protocol, user);
-            column.appendChild(scheduleList);
+                const contentContainer = document.createElement('div');
+                contentContainer.style.display = 'flex';
+                contentContainer.style.justifyContent = 'space-between';
 
-            contentContainer.appendChild(column);
-        });
+                data.forEach((scheduleData, index) => {
+                    const { key, protocol, user, title } = urls[index];
+                    const sortedData = sortScheduleData(scheduleData, key);
+                    const column = document.createElement('div');
+                    column.style.flex = '1';
+                    column.style.padding = '10px';
 
-        cardContainer.appendChild(contentContainer);
-        document.body.appendChild(cardContainer);
+                    const sectionTitle = document.createElement('h3');
+                    sectionTitle.textContent = title;
+                    sectionTitle.style.fontSize = '14px';
+                    sectionTitle.style.margin = '0 0 10px 0';
+                    sectionTitle.style.color = 'black';
+                    column.appendChild(sectionTitle);
 
-        setTimeout(() => {
-            cardContainer.style.height = originalHeight;
-        }, 50);
-    }
+                    const scheduleList = createScheduleList(sortedData, key, protocol, user);
+                    column.appendChild(scheduleList);
 
-    function renderMinimizedCard(data) {
-        cardContainer.classList.remove('maximized');
-        cardContainer.classList.add('minimized');
-
-        cardContainer.style.width = 'auto';
-        cardContainer.style.height = 'auto';
-        cardContainer.style.padding = '10px';
-        cardContainer.style.display = 'flex';
-        cardContainer.style.flexDirection = 'column';
-        cardContainer.style.bottom = '5px';
-        cardContainer.style.left = '10px';
-
-        const contentContainer = cardContainer.querySelector('div:nth-child(2)');
-        contentContainer.innerHTML = '';
-        contentContainer.style.width = '100%';
-
-        data.forEach((scheduleData, index) => {
-            const { key, protocol, user } = urls[index];
-            const nearestSchedule = findNearestSchedule(scheduleData, key);
-
-            if (nearestSchedule) {
-                const dateTime = new Date(nearestSchedule[key]);
-                const formattedDate = `${dateTime.getDate()}/${dateTime.getMonth() + 1}/${dateTime.getFullYear()}`;
-                const formattedTime = `${dateTime.getHours()}:${String(dateTime.getMinutes()).padStart(2, '0')}`;
-
-                const scheduleDetails = document.createElement('p');
-                scheduleDetails.style.fontSize = '10px';
-                scheduleDetails.style.margin = '0';
-                scheduleDetails.textContent = `${nearestSchedule[protocol]} - ${formattedDate} ${formattedTime} - ${nearestSchedule[user]}`;
-                contentContainer.appendChild(scheduleDetails);
-            }
-        });
-
-        setTimeout(() => {
-            cardContainer.style.width = originalWidth;
-        }, 50);
-    }
-
-    function renderTitleOnlyCard() {
-        cardContainer.classList.remove('maximized', 'minimized');
-        cardContainer.classList.add('titleOnly');
-
-        cardContainer.style.width = 'auto';
-        cardContainer.style.height = 'auto';
-        cardContainer.style.padding = '0';
-        cardContainer.style.display = 'flex';
-        cardContainer.style.flexDirection = 'column';
-        cardContainer.style.bottom = '5px'; // Ajuste vertical
-        cardContainer.style.left = '10px';  // Ajuste horizontal
-
-        const contentContainer = cardContainer.querySelector('div:nth-child(2)');
-        if (contentContainer) {
-            contentContainer.innerHTML = '';
-        }
-
-        setTimeout(() => {
-            cardContainer.style.width = 'auto';
-        }, 50);
-    }
-
-    function toggleWindowState() {
-        if (windowState === 'maximized') {
-            windowState = 'minimized';
-            cardContainer.style.height = `${titleBar.clientHeight}px`;
-            fetchScheduleData()
-                .then(data => {
-                    renderMinimizedCard(data);
-                })
-                .catch(error => {
-                    console.error('Erro ao exibir dados de agendamento:', error);
+                    contentContainer.appendChild(column);
                 });
-        } else if (windowState === 'minimized') {
-            windowState = 'titleOnly';
-            renderTitleOnlyCard();
-        } else {
-            windowState = 'maximized';
-            cardContainer.style.height = originalHeight;
-            cardContainer.innerHTML = '';
-            displayScheduleData();
-        }
+
+                const bar = document.querySelector("#bar1");
+                const dropdownDiv = document.createElement('div');
+                dropdownDiv.setAttribute('_ngcontent-c4', '');
+                dropdownDiv.classList.add('dropdown', 'ng-star-inserted');
+                dropdownDiv.setAttribute('role', 'presentation');
+
+                const innerDiv = document.createElement('div');
+                innerDiv.setAttribute('_ngcontent-c4', '');
+                innerDiv.setAttribute('aria-expanded', 'true');
+                innerDiv.setAttribute('aria-haspopup', 'true');
+                innerDiv.classList.add('item', 'dropdown-toggle');
+                innerDiv.setAttribute('data-toggle', 'dropdown');
+                innerDiv.setAttribute('type', 'button');
+
+                const bodyDiv = document.createElement('div');
+                bodyDiv.setAttribute('_ngcontent-c4', '');
+                bodyDiv.setAttribute('data-placement', 'right');
+                bodyDiv.setAttribute('title', 'Agendados');
+
+                const titleIcon = document.createElement('strong');
+                titleIcon.setAttribute('_ngcontent-c4', '');
+                titleIcon.setAttribute('class', 'titulo');
+                titleIcon.textContent = "Agendados";
+
+                const content = document.createElement('div');
+                content.setAttribute('_ngcontent-c4', '');
+                content.classList.add('dropdown-menu', 'dropdown-menu-side');
+                content.style.zIndex = "999999";
+                content.style.width = originalWidth;
+                content.style.height = originalHeight;
+                content.style.border = '1px solid #ccc';
+                content.style.borderRadius = '10px';
+                content.appendChild(contentContainer);
+
+                const spanicon = document.createElement('span');
+                spanicon.style.fontSize = '24px';
+                spanicon.setAttribute('_ngcontent-c4', '');
+                spanicon.classList.add('fas', 'fa-calendar-alt');
+
+                bodyDiv.appendChild(spanicon);
+                bodyDiv.appendChild(titleIcon);
+
+                innerDiv.appendChild(bodyDiv);
+                dropdownDiv.appendChild(content);
+                dropdownDiv.appendChild(innerDiv);
+
+                bar.appendChild(dropdownDiv);
+
+                setTimeout(() => {
+                    cardContainer.style.height = originalHeight;
+                }, 1000);
+                clearInterval(intervalId);
+            } catch {}
+
+        }, 1000);
+
     }
 
     async function displayScheduleData() {
         try {
             const data = await fetchScheduleData();
+            console.log(data);
             renderMaximizedCard(data);
         } catch (error) {
             console.error('Erro ao exibir dados de agendamento:', error);
         }
     }
 
-    const style = document.createElement('style');
-    style.textContent = `
-        #schedule-window {
-            transition: height 0.3s ease, width 0.3s ease;
-        }
-        #schedule-window.maximized {
-            height: ${originalHeight};
-            width: ${originalWidth};
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #schedule-window.minimized {
-            height: auto !important;
-            width: auto !important;
-            padding: 5px !important;
-            bottom: 5px !important; /* Ajuste a posição vertical */
-            left: 10px !important;  /* Ajuste a posição horizontal */
-        }
-        #schedule-window.titleOnly {
-            height: auto !important;
-            width: auto !important;
-            padding: 0 !important;
-            left: 10px !important;  /* Ajuste a posição horizontal */
-        }
-    `;
-    document.head.appendChild(style);
-
     window.addEventListener('load', displayScheduleData);
-
-
-    function insertButtonIntoSidebar() {
-       
-        const sidebar = document.getElementById('bar1');
-
-        if (sidebar) {
-          
-            const button = document.createElement('button');
-            button.textContent = 'Meu Botão';
-            button.className = 'my-custom-button'; 
-
-         
-            button.addEventListener('click', function() {
-              
-                alert('Botão clicado!');
-            });
-
-            
-            sidebar.insertBefore(button, sidebar.firstChild);
-        } else {
-            console.error('Elemento <aside id="bar1"> não encontrado na página.');
-        }
-    }
-
-   
-    document.addEventListener('DOMContentLoaded', () => {
-        insertButtonIntoSidebar();
-    });
 
 })();
