@@ -137,7 +137,7 @@
         }
 
         .table-container {
-            max-height: 500px; /* Altura máxima da tabela */
+            max-height: 50%; /* Altura máxima da tabela */
             overflow-y: auto; /* Adiciona scroll vertical se necessário */
         }
         `);
