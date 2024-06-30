@@ -6,6 +6,8 @@
 // @author       Wesley GG
 // @match        https://integrator6.gegnet.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gegnet.com.br
+// @updateURL    https://github.com/wrGGsiq/scriptsGG/raw/main/Nova%20Tela%20ISP.user.js
+// @downloadURL  https://github.com/wrGGsiq/scriptsGG/raw/main/Nova%20Tela%20ISP.user.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
