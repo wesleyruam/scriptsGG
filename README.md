@@ -38,12 +38,6 @@ Método 2: Instalar via GitHub:
 3. Clique no botão "Raw" e você será redirecionado para a página de instalação.
 4. Clique no botão "Instalar" ou "Install" para adicionar o script ao Tampermonkey.
 
-Método 2: Canal de Scripts
-1. Abra o canal de scripts onde o script que você deseja instalar está disponível.
-2. Clique no script que você deseja instalar. Você será redirecionado para a página de instalação do script.
-3. Clique no botão "Instalar" ou "Install" para adicionar o script ao Tampermonkey.
-
-
 ### Adicionar o script ao Tampermonkey manuralmente
 
 1. Clique no ícone do Tampermonkey na barra de ferramentas do seu navegador.
