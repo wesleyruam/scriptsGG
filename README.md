@@ -17,8 +17,8 @@ Estes scripts têm sido uma ferramenta valiosa, simplificando tarefas e aumentan
 
 Para relatar bugs ou erros nos scripts, por favor, envie um e-mail com o assunto "BUG - [nome do script]" para `wesley.gegnet@gmail.com`. Estou comprometido em melhorar continuamente a qualidade dos scripts e agradeco o seu feedback!
 
-
-
+---
+### Tutorial para Instalação dos Scripts
 
 ### Passo 1: Instalar Tampermonkey
 
