@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         LOGAR e DESLOGAR DA FILA - SZ.CHAT
-// @version      2.0
+// @version      2.2
 // @description  Automação para logar na Fila
 // @author       Matheus Eger
 // @match        http://qm.coger.net.br:8080/queuemetrics/qm_agentpage2_load.do
